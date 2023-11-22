@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+    xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+    xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+    IgnorableNamespaces="uap rescap">
+
+  <Identity
+      Name="@APPX_PACKAGE_PRODUCT_NAME@"
+      Publisher="@APPX_PACKAGE_PUBLISHER_ID@"
+      Version="@APPX_PACKAGE_PRODUCT_VERSION@"
+      ProcessorArchitecture="x64" />
+
+  <Properties>
+    <DisplayName>@APPX_PACKAGE_PRODUCT_DISPLAY_NAME@</DisplayName>
+    <PublisherDisplayName>@APPX_PACKAGE_PUBLISHER_DISPLAY_NAME@</PublisherDisplayName>
+    <Logo>Assets/StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily
+        Name="Windows.Desktop"
+        MinVersion="@APPX_PACKAGE_MIN_VERSION@"
+        MaxVersionTested="@APPX_PACKAGE_MAX_VERSION_TESTED@" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-gb" />
+  </Resources>
+
+  <Applications>
+    <Application
+       Id="App"
+       Executable="@APPX_PACKAGE_EXECUTABLE@"
+       EntryPoint="Windows.Application">
+
+      <uap:VisualElements
+          DisplayName="@APPX_PACKAGE_PRODUCT_DISPLAY_NAME@"
+          Description="@APPX_PACKAGE_PRODUCT_DESCRIPTION@"
+          BackgroundColor="@APPX_PACKAGE_PRODUCT_BACKGROUND_COLOR@"
+          Square150x150Logo="Assets/MediumTile.png"
+          Square44x44Logo="Assets/AppIcon.png">
+
+        <uap:DefaultTile
+            Wide310x150Logo="Assets/WideTile.png"
+            Square71x71Logo="Assets/SmallTile.png"
+            Square310x310Logo="Assets/LargeTile.png" />
+
+        <uap:SplashScreen Image="Assets/SplashScreen.png" />
+
+      </uap:VisualElements>
+
+    </Application>
+  </Applications>
+
+</Package>
