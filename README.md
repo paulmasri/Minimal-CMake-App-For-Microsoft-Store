@@ -4,56 +4,37 @@ A simple CMake project to build, package, bundle and sign a minimal app for Wind
 
 The app itself is based on [a minimal sample provided by Microsoft](https://learn.microsoft.com/en-us/cpp/windows/walkthrough-creating-windows-desktop-applications-cpp?view=msvc-170).
 
-## How to use
+## How to build and install
 
-This project needs CMake 3.24+.
+I have provided:
+- **MakeSelfSignedCertificate.ps1** - a script to generate a local self-signed certificate. You need a local certificate to be able to install the app on your local Windows PC just like it was installed via the Microsoft Store app.
+- **cli_build.bat** - a build script that uses CMake 3.24+ and Ninja.
 
 ## Create a local self-signed certificate for code-signing
 
 To prepare the app for the Microsoft Store, or to install it on your local machine, you'll need a private certificate key to code-sign the app.
 
-For a published app you would need to download this via Visual Studio.
-
 For local installation, we're using a self-signed certificate.
 
-To create this, run the script `MakeSelfSignedCertificate.ps1` from PowerShell.
-
-This will generate a local Certificate-Signing Authority (CA) called "Qt.Experiment.Authority" and a local Certificate, using that authority, called "Qt.Experiment.Certificate" and will save the `.pfx` file in the project source folder.
-
 1. Run PowerShell as Admin.
-1. Navigate to your source folder.
+1. Navigate to the source folder (that contains this file).
 1. Enter `.\MakeSelfSignedCertificate.ps1`.
-1. You will be asked for a password. Choose your own but make a note of it.
+1. You will be prompted for a password. Choose your own but make a note of it.
 1. Check that the certificate files have been created in your source folder.
-1. Check that the certificates exist by running the Windows certificate manager. (Settings > Manage User Certificates; or Win + R, `certmgr.msc`). Look in **Personal > Certificates** for `Qt.Experiment.Certificate` and **Trusted Root Certification > Certificates** for `Qt.Experiment.Authority`. (NB: these don't auto-refresh. Use F5)
+1. Check that the certificates have been installed by running the Windows certificate manager. (Settings > Manage User Certificates; or Win + R, `certmgr.msc`). Look in **Personal > Certificates** for `CMake.Experiment.Certificate` and in **Trusted Root Certification > Certificates** for `CMake.Experiment.Authority`. (NB: these don't auto-refresh. Use F5)
 
-## Configure the Release build, then build and install
+## Build and install
 
-Configure the Release build as follows:
-- set CMake Cache Variables:
-    - `APP_PACKAGE_SIGN` (bool): `ON`
-    - `APP_BUNDLE` (bool): `ON`
-    - `PFX_SIGNATURE_KEY` (string): `LocalQtExperimentKey.pfx` (or your store's private certificate, which must be saved in the project source folder
-    - `PFX_PASSWORD` (string): password for your private certificate key
-    - `CMAKE_INSTALL_PREFIX` (string): `your-build-directory/install`
-- After running CMake and then Build, ensure you run the Install step.
+You can use your own build script if you wish and your own choice of compiler, CMake & Ninja. However the script provided will exactly replicate my approach.
 
-## Check the app package
+To use the script, you need to have **Microsoft Visual Studio 2022 (Community edition)** installed, which itself provides CMake & Ninja.
+If you have a different version or edition of Visual Studio, edit the path in line 5 of the script.
 
-You can do a simple visual check of the app package. It will be in the build folder, within the `packages` folder. Rename `Qt6-CMake-QML_x64.appx` to `Qt6-CMake-QML_x64.zip` and examine its contents. It should contain:
-- AppxManifest.xml
-- Assets (containing the icon set and splash screen images)
-- bin, containing:
-    - The .exe
-    - VC runtime DLLs, e.g. `vcruntime140.dll`
-    
-## Install the app
-
-The app bundle will be in the build directory `Minimal-CMake-App-For-Microsoft-Store_x64.appxbundle`
-Double-click this to open the installer.
-Assuming you've correctly created the private certificate key and the signing step worked this should allow you to install the app.
-
-### Don't need a bundle?
-
-If you only need a single package rather than a bundle, set `APP_BUNDLE`: `OFF`.
-This will skip the bundle step and will sign the package instead.
+1. Open the Visual Studio command prompt. (This must match the version & edition in the script.)
+1. Navigate to the source folder (that contains this file).
+1. Enter `cli_build`.
+1. You will be prompted for the `PFX_SIGNATURE_KEY`. Enter the filename of the private certificate key (`LocalCMakeExperimentKey.pfx` if you used the script above).
+1. You will be prompted for the `PFX_PASSWORD`. Enter the password associated with the private certificate key.
+1. The script will create a Release build of the app in the folder `build-Release`, install it into subfolder `build-Release\install`, create a 64-bit package in subfolder `build-Release\packages`, bundle that into `build-Release\CMakeAppForMSStore.appxbundle` and code sign it.
+1. Open the bundle at `build-Release\CMakeAppForMSStore.appxbundle` to install it.
+1. Either launch it from the installer or close the installer and see it in the Start menu.
