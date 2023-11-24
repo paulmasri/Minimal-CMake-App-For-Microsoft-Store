@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 
-set(APP_TARGET Minimal-CMake-App-For-Microsoft-Store)
+set(APP_TARGET CMakeAppForMSStore)
 set(APP_NAME "Minimal CMake App for Microsoft Store")
 
 project(${APP_TARGET} VERSION 1.0.0 LANGUAGES CXX)
@@ -22,7 +22,7 @@ install(TARGETS ${APP_TARGET}
 
 include(InstallRequiredSystemLibraries)
 
-set(APPX_PUBLISHER_ID "Qt.Experiment.Certificate")
+set(APPX_PUBLISHER_ID "CMake.Experiment.Certificate")
 set(APPX_PACKAGE_PRODUCT_NAME "CMakeExperiment.${APP_TARGET}")
 set(APPX_PACKAGE_PRODUCT_DISPLAY_NAME "${APP_NAME}")
 set(APPX_PACKAGE_PRODUCT_DESCRIPTION "Minimal test app for building projects for the Microsoft Store in CMake")
