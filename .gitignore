@@ -72,8 +72,10 @@ out/
 # Python byte code
 *.pyc
 
+# Build folders
+build*
+
 # Binaries
-# --------
 *.dll
 *.exe
 
