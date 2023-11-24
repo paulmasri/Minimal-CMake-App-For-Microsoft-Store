@@ -7,8 +7,8 @@ The app itself is based on [a minimal sample provided by Microsoft](https://lear
 ## How to build and install
 
 I have provided:
-- **MakeSelfSignedCertificate.ps1** - a script to generate a local self-signed certificate. You need a local certificate to be able to install the app on your local Windows PC just like it was installed via the Microsoft Store app.
-- **cli_build.bat** - a build script that uses CMake 3.24+ and Ninja.
+- **MakeSelfSignedCertificate.ps1**: a script to generate a local self-signed certificate. You need a local certificate to be able to install the app on your local Windows PC just like it was installed via the Microsoft Store app.
+- **cli_build.bat**: a build script that uses CMake 3.24+, Ninja and Visual Studio (2022 Community).
 
 ## Create a local self-signed certificate for code-signing
 
@@ -21,7 +21,11 @@ For local installation, we're using a self-signed certificate.
 1. Enter `.\MakeSelfSignedCertificate.ps1`.
 1. You will be prompted for a password. Choose your own but make a note of it.
 1. Check that the certificate files have been created in your source folder.
-1. Check that the certificates have been installed by running the Windows certificate manager. (Settings > Manage User Certificates; or Win + R, `certmgr.msc`). Look in **Personal > Certificates** for `CMake.Experiment.Certificate` and in **Trusted Root Certification > Certificates** for `CMake.Experiment.Authority`. (NB: these don't auto-refresh. Use F5)
+1. Check that the certificates have been installed by running the Windows certificate manager.
+  - Go to Settings > Manage User Certificates; or Win + R, `certmgr.msc`.
+  - Look in **Personal > Certificates** for `CMake.Experiment.Certificate`.
+  - Look in **Trusted Root Certification > Certificates** for `CMake.Experiment.Authority`.
+  - These don't auto-refresh. Use F5.
 
 ## Build and install
 
@@ -33,8 +37,13 @@ If you have a different version or edition of Visual Studio, edit the path in li
 1. Open the Visual Studio command prompt. (This must match the version & edition in the script.)
 1. Navigate to the source folder (that contains this file).
 1. Enter `cli_build`.
-1. You will be prompted for the `PFX_SIGNATURE_KEY`. Enter the filename of the private certificate key (`LocalCMakeExperimentKey.pfx` if you used the script above).
+1. You will be prompted for the `PFX_SIGNATURE_KEY`. Enter the filename of the private certificate key. (It will be `LocalCMakeExperimentKey.pfx` if you used the script above).
 1. You will be prompted for the `PFX_PASSWORD`. Enter the password associated with the private certificate key.
-1. The script will create a Release build of the app in the folder `build-Release`, install it into subfolder `build-Release\install`, create a 64-bit package in subfolder `build-Release\packages`, bundle that into `build-Release\CMakeAppForMSStore.appxbundle` and code sign it.
-1. Open the bundle at `build-Release\CMakeAppForMSStore.appxbundle` to install it.
-1. Either launch it from the installer or close the installer and see it in the Start menu.
+1. The script will:
+  - create a Release build of the app in the folder `build-Release`,
+  - install it into subfolder `build-Release\install`,
+  - create a 64-bit package in subfolder `build-Release\packages`,
+  - bundle that into `build-Release\CMakeAppForMSStore.appxbundle`,
+  - and code sign the bundle.
+1. Double-click the bundle at `build-Release\CMakeAppForMSStore.appxbundle` to install it.
+1. Either launch the app from the installer or close the installer and launch it in from the Start menu.
