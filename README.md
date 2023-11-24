@@ -22,10 +22,10 @@ For local installation, we're using a self-signed certificate.
 1. You will be prompted for a password. Choose your own but make a note of it.
 1. Check that the certificate files have been created in your source folder.
 1. Check that the certificates have been installed by running the Windows certificate manager.
-  - Go to Settings > Manage User Certificates; or Win + R, `certmgr.msc`.
-  - Look in **Personal > Certificates** for `CMake.Experiment.Certificate`.
-  - Look in **Trusted Root Certification > Certificates** for `CMake.Experiment.Authority`.
-  - These don't auto-refresh. Use F5.
+   - Go to Settings > Manage User Certificates; or Win + R, `certmgr.msc`.
+   - Look in **Personal > Certificates** for `CMake.Experiment.Certificate`.
+   - Look in **Trusted Root Certification > Certificates** for `CMake.Experiment.Authority`.
+   - These don't auto-refresh. Use F5.
 
 ## Build and install
 
@@ -40,10 +40,10 @@ If you have a different version or edition of Visual Studio, edit the path in li
 1. You will be prompted for the `PFX_SIGNATURE_KEY`. Enter the filename of the private certificate key. (It will be `LocalCMakeExperimentKey.pfx` if you used the script above).
 1. You will be prompted for the `PFX_PASSWORD`. Enter the password associated with the private certificate key.
 1. The script will:
-  - create a Release build of the app in the folder `build-Release`,
-  - install it into subfolder `build-Release\install`,
-  - create a 64-bit package in subfolder `build-Release\packages`,
-  - bundle that into `build-Release\CMakeAppForMSStore.appxbundle`,
-  - and code sign the bundle.
+   - create a Release build of the app in the folder `build-Release`,
+   - install it into subfolder `build-Release\install`,
+   - create a 64-bit package in subfolder `build-Release\packages`,
+   - bundle that into `build-Release\CMakeAppForMSStore.appxbundle`,
+   - and code sign the bundle.
 1. Double-click the bundle at `build-Release\CMakeAppForMSStore.appxbundle` to install it.
 1. Either launch the app from the installer or close the installer and launch it in from the Start menu.
